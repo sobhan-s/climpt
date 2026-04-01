@@ -1,12 +1,23 @@
 {
-  "name": "service1",
+  "name": "@repo/job-submitter",
   "version": "1.0.0",
-  "description": "",
+  "private": true,
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "@climpt/config": "workspace:*",
+    "@climpt/typescript-config": "workspace:*",
+    "bullmq": "^5.7.8",
+    "express": "^4.19.2",
+    "prom-client": "^15.1.3",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.14"
+  }
 }

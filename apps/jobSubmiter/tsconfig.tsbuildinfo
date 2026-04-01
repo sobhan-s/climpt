@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/controller/job.controller.ts","./src/routes/job.routes.ts","./src/services/job.service.ts","./src/types/job.type.ts"],"version":"5.9.2"}
