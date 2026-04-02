@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/metrices.ts","./src/redis.ts","./src/worker.ts","./src/tasks/hash.task.ts","./src/tasks/prime.task.ts","./src/tasks/sort.task.ts"],"version":"5.9.2"}
