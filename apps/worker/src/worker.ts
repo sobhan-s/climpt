@@ -12,14 +12,23 @@ type Job = {
 
 export async function startWorker() {
   console.log('Worker started...');
-
   while (true) {
-    try {
-      const jobData = await redis.brpop('job_queue', 0);
+    let jobData;
 
+    try {
+      jobData = await redis.brpop('job_queue', 0);
+      console.log('Raw Redis response:', jobData);
+    } catch (err) {
+      console.error('BRPOP failed:', err);
+      continue;
+    }
+
+    try {
       if (!jobData) continue;
 
       const job: Job = JSON.parse(jobData[1]);
+
+      // console.log('Received job:', job);
 
       const endTimer = jobProcessingTime.startTimer();
 
@@ -27,9 +36,11 @@ export async function startWorker() {
 
       let result: any;
 
-      switch (job.task) {
+      const taskType = job.task?.trim().toLowerCase();
+
+      switch (taskType) {
         case 'hash':
-          result = bcryptHash(job.value);
+          result = await bcryptHash(job.value);
           break;
 
         case 'prime':
@@ -41,7 +52,7 @@ export async function startWorker() {
           break;
 
         default:
-          throw new Error('Unknown task');
+          throw new Error(`Unknown task: ${taskType}`);
       }
 
       await redis.hset(`job:${job.id}`, {
@@ -52,7 +63,7 @@ export async function startWorker() {
       jobsProcessed.inc();
       endTimer();
     } catch (err) {
-      console.error('Worker error:', err);
+      console.error('Worker processing error:', err);
       jobErrors.inc();
     }
   }
