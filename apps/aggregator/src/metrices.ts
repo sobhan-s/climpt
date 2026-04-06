@@ -1,4 +1,3 @@
-// src/metrics.ts
 import client from 'prom-client';
 
 export const totalJobsSubmitted = new client.Gauge({
