@@ -1,0 +1,88 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    hostname: redis
+
+    healthcheck:
+      test: ['CMD-SHELL', 'redis-cli ping | grep PONG']
+      interval: 1s
+      timeout: 3s
+      retries: 5
+
+    command: ['redis-server']
+
+    ports:
+      - '6379:6379'
+
+    restart: unless-stopped
+
+    volumes:
+      - redis-data:/data
+
+    networks:
+      - climpt-network
+
+#   jobsubmitter:
+#     build:
+#       context: .
+#       dockerfile: Docker/jobsubmitter.Dockerfile
+#     container_name: jobsubmitter
+
+#     depends_on:
+#       redis:
+#         condition: service_healthy
+
+#     env_file:
+#       - .env
+
+#     ports:
+#       - '8000:8000'
+
+#     networks:
+#       - climpt-network
+
+#   worker:
+#     build:
+#       context: .
+#       dockerfile: Docker/worker.Dockerfile
+#     container_name: worker
+
+#     depends_on:
+#       redis:
+#         condition: service_healthy
+
+#     env_file:
+#       - .env
+
+#     ports:
+#       - '8001:8001'
+
+#     networks:
+#       - climpt-network
+
+#   aggregator:
+#     build:
+#       context: .
+#       dockerfile: Docker/aggregator.Dockerfile
+#     container_name: aggregator
+
+#     depends_on:
+#       redis:
+#         condition: service_healthy
+
+#     env_file:
+#       - .env
+
+#     ports:
+#       - '8002:8002'
+
+#     networks:
+#       - climpt-network
+
+volumes:
+  redis-data:
+    driver: local
+
+networks:
+  climpt-network:
