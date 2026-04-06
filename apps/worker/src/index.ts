@@ -5,18 +5,13 @@ import { redis } from './redis.js';
 
 const app = express();
 
-app.get('/metrics', async (_req, res) => {
+app.get('/metrics', async (req, res) => {
   res.set('Content-Type', register.contentType);
   res.send(await register.metrics());
 });
 
-app.get('/health', async (_req, res) => {
-  try {
-    await redis.ping();
-    res.json({ status: 'ok', service: 'worker' });
-  } catch {
-    res.status(503).json({ status: 'error' });
-  }
+app.get('/health', async (req, res) => {
+  res.json({ status: 'ok', service: 'worker' });
 });
 
 const PORT = 8001;

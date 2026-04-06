@@ -1,12 +1,25 @@
 {
-  "name": "aggregator",
+  "name": "@climpt/aggregator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "dev": "tsc -b && node dist/index.js",
+    "start": "node dist/index.js",
+    "build": "tsc -b",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@climpt/config": "workspace:*",
+    "@climpt/typescript-config": "workspace:*",
+    "express": "^5.2.1",
+    "prom-client": "^15.1.3"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.6"
+  }
 }

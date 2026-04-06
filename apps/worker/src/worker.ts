@@ -60,6 +60,8 @@ export async function startWorker() {
         result: JSON.stringify(result).slice(0, 500),
       });
 
+      await redis.incr('total_jobs_completed');
+
       jobsProcessed.inc();
       endTimer();
     } catch (err) {

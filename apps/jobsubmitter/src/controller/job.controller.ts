@@ -16,7 +16,7 @@ const totalJobsSubmitted = new client.Counter({
 export async function submit(req: Request, res: Response): Promise<void> {
   try {
     const id = uuidv4();
-    const { task = 'fibonacci', value = 35 } = req.body as JobPayload;
+    const { task = 'prime', value = 100000 } = req.body as JobPayload;
 
     await enqueueJob({ id, task, value, createdAt: Date.now() });
     totalJobsSubmitted.inc();
