@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: climpt
+  labels:
+    name: climpt
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: climpt
+data:
+  REDIS_HOST: 'redis'
+  REDIS_PORT: '6379'
+  REDIS_URL: 'redis://redis:6379'
+  NODE_ENV: 'production'

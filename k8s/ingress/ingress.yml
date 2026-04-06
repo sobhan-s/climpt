@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: climpt-ingress
+  namespace: climpt
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+    http:
+      paths:
+        - path: /submit
+          pathType: Prefix
+          backend:
+            service:
+              name: jobsubmitter
+              port:
+                number: 80
+
+        - path: /status
+          pathType: Prefix
+          backend:
+            service:
+              name: jobsubmitter
+              port:
+                number: 80
+
+        - path: /stats
+          pathType: Prefix
+          backend:
+            service:
+              name: aggregator
+              port:
+                number: 8002
+
+        - path: /health
+          pathType: Prefix
+          backend:
+            service:
+              name: jobsubmitter
+              port:
+                number: 80
